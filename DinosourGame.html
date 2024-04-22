@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Dinosour Game</title>
+	<style>
+		*{
+			padding: 0px;
+			margin: 0px;
+		}
+		.game-cont{
+			height: 2000px;
+			width: 1400px;
+			border: 5px solid black;
+			
+			background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIwgm2-tA-oVXke57oORfpz9faB_CRD0U9rw&usqp=CAU");
+			/*background-image: url("https://t3.ftcdn.net/jpg/04/45/14/18/360_F_445141888_YJ8ypPK8Rj1PJe9ScCGu7Ua2agZyEuWL.jpg");*/
+			background-size: 100%;
+			background-repeat: repeat-x;
+		}
+		.dino{
+			height: 80px;
+			width: 60px;
+			position: relative;
+			top: 450px;
+			
+			background-image: url("https://i.pinimg.com/474x/51/7c/e2/517ce2fd6abacf809af5ea193a38ca91.jpg");
+			background-position: center;
+			background-size: 80%;
+
+		}
+		.jump{
+			animation: jump 0.5s ease-in-out 1;
+			
+		}
+		@keyframes jump{
+			80%{
+				top:200px;
+			}
+		}
+		.block{
+			height: 50px;
+			width: 50px;
+			background-color: pink;
+			background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-J-lp2wGpmZu40NfpHGgNCNoE4M89Yk4HvHj1Pz0IHLJdjQrmtNOGz7a1kb5dKVphICw&usqp=CAU");
+			background-position: center;
+			background-size: 100%;
+			position: relative;
+			top: 400px; 
+			right: 1000px;
+			animation: move 3s linear infinite;
+		}
+		@keyframes move{
+			0%{
+				left: 800px;
+			}
+			100%{
+				left: -200px;
+			}
+		}
+
+		#score{
+			position: fixed;
+			top: 10px;
+			right:50px;
+			color: white;
+		
+			font-size: 400%;
+
+		}
+	</style>
+</head>
+<body>
+
+<div class="game-cont">
+	<div class="dino" onclick="addJump()"></div>
+	<div class="block"></div>
+</div>
+
+<div id="score">0</div>
+<script >
+	let score=0;
+	let scoreDiv=document.getElementById("score");
+	scoreDiv.innerHTML='Score'+ score;
+
+	function addJump()
+	{
+		let dino=document.getElementsByClassName("dino")[0];
+		if(dino.getAttribute("class")=="dino"){
+			dino.setAttribute("class","dino jump")
+			setTimeout(()=>{
+				dino.setAttribute("class","dino");
+			},1000)
+		}
+	}
+
+	let gameOver=setInterval(function(){
+		let dino=document.getElementsByClassName("dino")[0];
+		let block=document.getElementsByClassName("block")[0];
+		let dinoDim=parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
+		let blockDim=parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+		scoreDiv.innerHTML=score++ ;
+		if(blockDim>0 && blockDim<20 && dinoDim>=120)
+		{
+			alert("GAME OVER" +score)
+		}
+	},100)
+</script>
+</body>
+</html>
